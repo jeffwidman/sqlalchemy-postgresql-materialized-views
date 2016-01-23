@@ -29,7 +29,6 @@ class GearItem(db.Model):
             return self.mat_view.review_rating
 
 
-
 class GearItemMV(MaterializedView):
     __table__ = create_mat_view("gear_item_mv",
                     db.select(

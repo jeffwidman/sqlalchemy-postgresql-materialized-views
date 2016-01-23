@@ -1,7 +1,7 @@
 # materialized_view_factory.py
 # standalone SQLAlchemy example
 
-# Accompanying blog post: 
+# Accompanying blog post:
 # http://www.jeffwidman.com/blog/847/
 
 # Many thanks to Mike Bayer (@zzzeek) for his help.
@@ -23,7 +23,7 @@ def compile(element, compiler, **kw):
     # but I'd rather have noisy errors
     return "CREATE MATERIALIZED VIEW %s AS %s" % (
         element.name,
-        compiler.sql_compiler.process(element.selectable),
+        compiler.sql_compiler.process(element.selectable, literal_binds=True),
         )
 
 

@@ -24,12 +24,12 @@ def compile(element, compiler, **kw):
     return "CREATE MATERIALIZED VIEW %s AS %s" % (
         element.name,
         compiler.sql_compiler.process(element.selectable, literal_binds=True),
-        )
+    )
 
 
 def create_mat_view(metadata, name, selectable):
-    _mt = db.MetaData() # temp metadata just for initial Table object creation
-    t = db.Table(name, _mt) # the actual mat view class is bound to db.metadata
+    _mt = db.MetaData()  # temp metadata just for initial Table object creation
+    t = db.Table(name, _mt)  # the actual mat view class is bound to db.metadata
     for c in selectable.c:
         t.append_column(db.Column(c.name, c.type, primary_key=c.primary_key))
 
@@ -64,11 +64,11 @@ class GearMV(Base):
     __table__ = create_mat_view(
         Base.metadata,
         "gear_mv",
-        db.select(
-            [Gear.id.label('id'),
-             db.func.count(Gear.id).label('review_count'),
-             db.func.avg(Gear.rating).label('review_rating'),]
-        ).select_from(Gear)
+        db.select([
+            Gear.id.label('id'),
+            db.func.count(Gear.id).label('review_count'),
+            db.func.avg(Gear.rating).label('review_rating'),
+        ]).select_from(Gear)
         .group_by(Gear.id))
 
 db.Index('test_index', GearMV.id, unique=True)

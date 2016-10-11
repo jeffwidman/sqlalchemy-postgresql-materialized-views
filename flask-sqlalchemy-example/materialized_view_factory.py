@@ -33,6 +33,9 @@ def create_mat_view(name, selectable, metadata=db.metadata):
     for c in selectable.c:
         t.append_column(db.Column(c.name, c.type, primary_key=c.primary_key))
 
+    if not (any([c.primary_key for c in selectable.c])):
+        t.append_constraint(PrimaryKeyConstraint(*[c.name for c in selectable.c]))
+
     db.event.listen(
         metadata, 'after_create',
         CreateMaterializedView(name, selectable)

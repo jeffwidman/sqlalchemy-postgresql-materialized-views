@@ -64,8 +64,7 @@ def refresh_mat_view(name, concurrently):
 def refresh_all_mat_views(concurrently=True):
     '''Refreshes all materialized views. Currently, views are refreshed in
     non-deterministic order, so view definitions can't depend on each other.'''
-    # TODO use `include='materialized'` once https://bitbucket.org/zzzeek/sqlalchemy/issues/3588/ lands
-    mat_views = db.inspect(db.engine).get_view_names()
+    mat_views = db.inspect(db.engine).get_view_names(include='materialized')
     for v in mat_views:
         refresh_mat_view(v, concurrently)
 

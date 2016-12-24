@@ -7,7 +7,7 @@
 # Many thanks to Mike Bayer (@zzzeek) for his help.
 
 from sqlalchemy.ext import compiler
-from sqlalchemy.schema import DDLElement
+from sqlalchemy.schema import DDLElement, PrimaryKeyConstraint
 import sqlalchemy as db
 
 
@@ -32,6 +32,9 @@ def create_mat_view(metadata, name, selectable):
     t = db.Table(name, _mt)  # the actual mat view class is bound to db.metadata
     for c in selectable.c:
         t.append_column(db.Column(c.name, c.type, primary_key=c.primary_key))
+
+    if not (any([c.primary_key for c in selectable.c])):
+        t.append_constraint(PrimaryKeyConstraint(*[c.name for c in selectable.c]))
 
     db.event.listen(
         metadata, "after_create",

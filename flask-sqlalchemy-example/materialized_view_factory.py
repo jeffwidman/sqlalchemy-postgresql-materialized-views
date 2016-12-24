@@ -28,8 +28,8 @@ def compile(element, compiler, **kw):
 
 
 def create_mat_view(name, selectable, metadata=db.metadata):
-    _mt = db.MetaData() # temp metadata just for initial Table object creation
-    t = db.Table(name, _mt) # the actual mat view class is bound to db.metadata
+    _mt = db.MetaData()  # temp metadata just for initial Table object creation
+    t = db.Table(name, _mt)  # the actual mat view class is bound to db.metadata
     for c in selectable.c:
         t.append_column(db.Column(c.name, c.type, primary_key=c.primary_key))
 

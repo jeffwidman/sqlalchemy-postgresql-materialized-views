@@ -52,6 +52,9 @@ def create_mat_view(metadata, name, selectable):
     )
     return t
 
+# NOTE: For functions showing how to refresh these views, see the
+# Flask-SQLAlchemy section.
+
 
 from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()

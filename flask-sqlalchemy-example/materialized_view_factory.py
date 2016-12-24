@@ -7,7 +7,7 @@
 # Many thanks to Mike Bayer (@zzzeek) for his help.
 
 from sqlalchemy.ext import compiler
-from sqlalchemy.schema import DDLElement
+from sqlalchemy.schema import DDLElement, PrimaryKeyConstraint
 from app import db
 
 
